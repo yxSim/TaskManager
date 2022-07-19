@@ -26,20 +26,10 @@ namespace ToDoApp
         public MainWindow()
         {
             InitializeComponent();
-            CreateDirectory();
+            var startInit = new StartInit();
         }
 
-        private void CreateDirectory()
-        {
-            try
-            {
-                Directory.CreateDirectory(@Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ToDoApp\\");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Exception in CreateDirectory() method: " + ex);
-            }
-        }
+        
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
