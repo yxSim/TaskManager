@@ -13,10 +13,10 @@ namespace ToDoApp
     internal class StartInit
     {
         private readonly string path = @Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\ToDoApp\\";
-        public StartInit()
+        public StartInit(DataGrid dataGrid)
         {
-            //CreateDirectory();
-            //LoadData();
+            CreateDirectory();
+            LoadData();
         }
 
         private void CreateDirectory()
@@ -34,24 +34,10 @@ namespace ToDoApp
 
         private void LoadData()
         {
-            var sr = new StreamReader(path + "data");
-            try
-            {
-                while (!sr.EndOfStream)
-                {
-                    var line = sr.ReadLine();
-                    var textColumn = new DataGridTextColumn();
-
-                }
-            }
-            catch (Exception ex)
-            {
-                //fail silently
-            }
-            finally
-            {
-                sr.Close();
-            }
+            var xmlHandler = new XmlHandler(path);
+            var tasks = xmlHandler.Read();
+            if (tasks == null) return;
+            MainWindow.Tasks = tasks;
         }
     }
 }

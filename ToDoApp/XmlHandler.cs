@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,51 +15,87 @@ namespace ToDoApp
 {
     internal class XmlHandler
     {
-        private string path;
-        private DataGrid dataGrid;
+        private readonly string _fileName;
 
-        public XmlHandler(string path, DataGrid dataGrid)
+        public XmlHandler(string fileName)
         {
-            this.path = path;
-            this.dataGrid = dataGrid;
+            _fileName = fileName + "\\data.xml";
         }
 
-        public void Read()
+
+        public List<Task>? Read()
         {
-            //ReadFromXml();
+            if (!File.Exists(_fileName)) return null;
+            var tasks = new List<Task>();
+            var doc = new XmlDocument();
+            doc.Load(_fileName);
+            var nodeList = doc.GetElementsByTagName("Task");
+            foreach (XmlNode node in nodeList)
+            {
+                var task = new Task();
+                foreach (XmlNode childNode in node.ChildNodes)
+                {
+                    switch (childNode.Name)
+                    {
+                        case "description":
+                            task.SetDescription(childNode.InnerText);
+                            break;
+                    }
+                }
+
+                if (node.Attributes != null)
+                    foreach (XmlAttribute att in node.Attributes)
+                    {
+                        task.Name = att.InnerText;
+                    }
+
+                tasks.Add(task);
+            }
+            return tasks;
         }
 
-        public void Write()
+        public void Write(List<Task> tasks)
         {
-            WriteToXml();
+            Create();
+            foreach (var task in tasks)
+            {
+                Write(task);
+            }
+
         }
 
-        private void ReadFromXml()
+        private void Write(Task task)
         {
             try
             {
-                var ds = new DataSet();
-                ds.ReadXml(path);
-                var dv = new DataView(ds.Tables[0]);
-                dataGrid.ItemsSource = dv;
+                var doc = XDocument.Load(_fileName);
+                var root = new XElement("Task");
+
+                root.Add(new XAttribute("name", task.Name));
+                root.Add(new XElement("description", task.GetDescription()));
+                doc.Element("Items")?.Add(root);
+                doc.Save(_fileName);
             }
             catch (Exception ex)
             {
-
+                Debug.WriteLine(ex.Message);
             }
+
         }
 
         private void Create()
         {
-            if (!File.Exists(path))
+            try
             {
-                new XDocument(new XElement("Items")).Save(path);
+                if (!File.Exists(_fileName))
+                {
+                    new XDocument(new XElement("Items")).Save(_fileName);
+                }
             }
-        }
-
-        private void WriteToXml()
-        {
-            Create();
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
     }
 }
