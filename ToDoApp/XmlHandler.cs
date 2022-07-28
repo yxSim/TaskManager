@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Shell;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -39,6 +40,9 @@ namespace ToDoApp
                     {
                         case "description":
                             task.SetDescription(childNode.InnerText);
+                            break;
+                        case "status":
+                            task.SetStatus(childNode.InnerText.Equals("True"));
                             break;
                     }
                 }
@@ -74,6 +78,7 @@ namespace ToDoApp
 
                 root.Add(new XAttribute("name", task.Name));
                 root.Add(new XElement("description", task.GetDescription()));
+                root.Add(new XElement("status", task.GetStatus()));
                 doc.Element("Items")?.Add(root);
                 doc.Save(_fileName);
             }
@@ -111,6 +116,7 @@ namespace ToDoApp
                 if (index != 0) continue;
                 if (node.Attributes != null) node.Attributes[0].InnerText = task.Name;
                 node.ChildNodes[0].InnerText = task.GetDescription();
+                node.ChildNodes[1].InnerText = task.GetStatus().ToString();
             }
             doc.Save(_fileName);
         }
