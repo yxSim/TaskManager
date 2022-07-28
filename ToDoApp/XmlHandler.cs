@@ -51,6 +51,7 @@ namespace ToDoApp
 
                 tasks.Add(task);
             }
+
             return tasks;
         }
 
@@ -96,6 +97,33 @@ namespace ToDoApp
             {
                 Debug.WriteLine(ex.Message);
             }
+        }
+
+        public void Edit(Task task)
+        {
+            var index = task.GetId();
+            var doc = new XmlDocument();
+            doc.Load(_fileName);
+            var nodeList = doc.GetElementsByTagName("Task");
+            foreach (XmlNode node in nodeList)
+            {
+                index--;
+                if (index != 0) continue;
+                if (node.Attributes != null) node.Attributes[0].InnerText = task.Name;
+                node.ChildNodes[0].InnerText = task.GetDescription();
+            }
+            doc.Save(_fileName);
+        }
+
+        public void Remove(int index)
+        {
+            var doc = new XmlDocument();
+            doc.Load(_fileName);
+            var nodeList = doc.GetElementsByTagName("Task");
+            var node = nodeList[index - 1];
+            node.ParentNode.RemoveChild(node);
+            doc.Save(_fileName);
+         
         }
     }
 }

@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="400">
+        Title="MainWindow"
+        x:Name="AppWindow" 
+        Height="600" 
+        Width="400">
     <Grid Name ="Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -17,13 +20,20 @@
             <ColumnDefinition Width ="50"/>
         </Grid.ColumnDefinitions>
         <Button x:Name="AddButton" Content="+" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Height="34" Width="34" Click="AddButton_Click"/>
-        <DataGrid x:Name="dataGrid" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0,15,0,15" ColumnWidth="*">
+        <DataGrid x:Name="DataGrid" ItemsSource="{Binding DataGridItems}" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin="0,15,0,15" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+            </DataGrid.Columns>
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
-                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="Row_MouseDown"/>
+                    <EventSetter Event="MouseRightButtonDown" Handler="Row_RightMouseDown"/>
                 </Style>
             </DataGrid.ItemContainerStyle>
         </DataGrid>
-        <Label x:Name="label" Content="Simple To Do application" Grid.Column="0" Grid.Row="0" FontFamily="Segoe Print" FontSize="24" FontWeight="Bold" FontStretch="Normal" Grid.ColumnSpan="2" />
+        <Label x:Name="label" Content="Simple Task Manager" Grid.Column="0" Grid.Row="0" FontFamily="Segoe Print" FontSize="24" FontWeight="Bold" FontStretch="Normal" Grid.ColumnSpan="2" />
+
+      
     </Grid>
+
 </Window>

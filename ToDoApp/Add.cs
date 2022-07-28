@@ -11,10 +11,10 @@ namespace ToDoApp
 {
     internal class Add
     {
+        private readonly Window? _window = ((MainWindow)Application.Current.MainWindow).AddWindow;
         private TextBox? _nameBox = ((MainWindow)Application.Current.MainWindow).AddWindow?.nameTextBox;
         private TextBox? _descriptionBox = ((MainWindow)Application.Current.MainWindow).AddWindow?.desctiptionTextBox;
-        private readonly Window? _window = ((MainWindow)Application.Current.MainWindow).AddWindow;
-        private DataGrid _dataGrid = ((MainWindow)Application.Current.MainWindow).dataGrid;
+        private readonly DataGrid _dataGrid = ((MainWindow)Application.Current.MainWindow).DataGrid;
 
         public void Cancel()
         {
@@ -30,12 +30,10 @@ namespace ToDoApp
 
         private void DoAddNewTask()
         {
-            var task = new Task(_nameBox?.Text, _descriptionBox?.Text);
-
-            MainWindow.Tasks.Add(task);
-            var xmlHandler = new XmlHandler(MainWindow.path);
+            var task = new Task(_nameBox?.Text!, _descriptionBox?.Text!);
+            ((MainWindow)Application.Current.MainWindow).GetViewModel().DataGridItems.Add(task);
+            var xmlHandler = new XmlHandler(MainWindow.Path);
             xmlHandler.Write(new List<Task>() { task });
-            _dataGrid.ItemsSource = MainWindow.Tasks;
             _dataGrid.Items.Refresh();
             _window?.Close();
         }

@@ -12,7 +12,7 @@ namespace ToDoApp
         private int Id { get; }
         public string Name { get; set; } = "";
         private string _description  = "";
-
+        private bool _status = false;
         public static int GlobalTaskId;
 
         public Task()
@@ -39,6 +39,21 @@ namespace ToDoApp
         public void SetDescription(string description)
         {
             _description = description;
+        }
+
+        public bool GetStatus()
+        {
+            return _status;
+        }
+
+        public void SetStatus(bool status)
+        {
+            _status = status;
+        }
+
+        public void ChangeStatus()
+        {
+            _status = !_status;
         }
     }
 }
