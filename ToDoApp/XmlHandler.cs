@@ -42,7 +42,7 @@ namespace ToDoApp
                             task.SetDescription(childNode.InnerText);
                             break;
                         case "status":
-                            task.SetStatus(childNode.InnerText.Equals("True"));
+                            task.Status = childNode.InnerText.Equals("True");
                             break;
                     }
                 }
@@ -78,7 +78,7 @@ namespace ToDoApp
 
                 root.Add(new XAttribute("name", task.Name));
                 root.Add(new XElement("description", task.GetDescription()));
-                root.Add(new XElement("status", task.GetStatus()));
+                root.Add(new XElement("status", task.Status));
                 doc.Element("Items")?.Add(root);
                 doc.Save(_fileName);
             }
@@ -116,7 +116,7 @@ namespace ToDoApp
                 if (index != 0) continue;
                 if (node.Attributes != null) node.Attributes[0].InnerText = task.Name;
                 node.ChildNodes[0].InnerText = task.GetDescription();
-                node.ChildNodes[1].InnerText = task.GetStatus().ToString();
+                node.ChildNodes[1].InnerText = task.Status.ToString();
             }
             doc.Save(_fileName);
         }
@@ -126,10 +126,14 @@ namespace ToDoApp
             var doc = new XmlDocument();
             doc.Load(_fileName);
             var nodeList = doc.GetElementsByTagName("Task");
-            var node = nodeList[index - 1];
+            var node = nodeList[index];
+            if (node == null)
+            {
+                doc.Save(_fileName);
+                return;
+            }
             node.ParentNode.RemoveChild(node);
             doc.Save(_fileName);
-         
         }
     }
 }

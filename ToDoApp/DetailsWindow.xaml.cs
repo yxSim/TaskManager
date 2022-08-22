@@ -27,6 +27,7 @@ namespace ToDoApp
             Init();
         }
 
+        //metoda nacte ukol a vypise ho do okna s detaily
         private void Init()
         {
             var index = _taskId;

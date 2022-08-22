@@ -19,6 +19,7 @@ namespace ToDoApp
             LoadData();
         }
 
+        //metoda vytvori adresar, pokud neexistuje
         private void CreateDirectory()
         {
             try
@@ -32,6 +33,7 @@ namespace ToDoApp
             }
         }
 
+        //metoda nacte data z xml souboru do ViewModelu
         private void LoadData()
         {
             var xmlHandler = new XmlHandler(_path);

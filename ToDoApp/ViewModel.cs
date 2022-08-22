@@ -15,7 +15,7 @@ namespace ToDoApp
 
         public ViewModel()
         {
-
+            var DataGridItems=new List<Task>();
         }
 
         public ViewModel(IList<Task> dataGridItems)
@@ -23,6 +23,19 @@ namespace ToDoApp
             DataGridItems = dataGridItems;
         }
 
+
+        //metoda vrati pozici ukolu podle zadaneho ID 
+        public int GetIndexByID(int ID)
+        {
+            var index = 0;
+            foreach (var item in DataGridItems)
+            {
+                if (item.GetId() == ID)
+                    return index;
+                index++;
+            }
+            return -1;
+        }
 
     }
 }

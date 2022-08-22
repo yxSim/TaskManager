@@ -26,7 +26,7 @@ namespace ToDoApp
             InitializeComponent();
         }
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             var add = new Add();
             add.Cancel();

@@ -24,9 +24,10 @@ namespace ToDoApp
         {
             InitializeComponent();
             var task = GetRow().Item as Task;
-            ChangeStatusButton.Content = !task.GetStatus() ? "✔" : "✘";
+            ChangeStatusButton.Content = !task.Status ? "✔" : "✘";
         }
 
+        //inicializuje edit okno a zobrazi ho
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             var row = GetRow();
@@ -45,6 +46,8 @@ namespace ToDoApp
             Close();
         }
 
+
+        //odstrani oznaceny ukol
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             var row = GetRow();
@@ -53,12 +56,15 @@ namespace ToDoApp
             Close();
         }
 
+        //zmeni stav ukolu na dokonceny/nedokonceny, ulozi zmenu do xml souboru
         private void ChangeStatusButton_Click(object sender, RoutedEventArgs e)
         {
             var task = GetRow().Item as Task;
             task?.ChangeStatus();
             var handler = new XmlHandler(MainWindow.Path);
             handler.Edit(task);
+            ((MainWindow)Application.Current.MainWindow).DataGrid.Items.Refresh();
+            
             Close();
         }
 
@@ -67,6 +73,7 @@ namespace ToDoApp
             ((MainWindow)Application.Current.MainWindow).ContextWindow.Close();
         }
 
+        //pomocna metoda, slouzi k zprehledneni
         private static DataGridRow GetRow()
         {
             return ((MainWindow)Application.Current.MainWindow).GetRow();

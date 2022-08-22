@@ -39,23 +39,14 @@ namespace ToDoApp
         {
             InitializeComponent();
 
+            //inicializuje ViewModel a nacte ukoly
             this._viewModel = new ViewModel()
             {
                 DataGridItems = new List<Task>()
             };
             this.DataContext = this._viewModel;
-            
-            var startInit = new StartInit(DataGrid);
-            Loaded += MainWindow_Loaded;
-        }
 
-        public void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            var rows = DataGrid.Items;
-            foreach (var row in rows)
-            {
-                Debug.WriteLine((row as Task).GetStatus());
-            }
+            var startInit = new StartInit(DataGrid);
         }
 
         public DataGridRow? GetRow()
@@ -69,6 +60,7 @@ namespace ToDoApp
             AddWindow.Show();
         }
 
+        //vytvori okno s menu na pozici a zobrazi ho
         private void Row_RightMouseDown(object sender, MouseButtonEventArgs e)
         {
          

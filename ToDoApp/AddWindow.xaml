@@ -20,7 +20,7 @@
         </Grid.ColumnDefinitions>
         <TextBox x:Name="nameTextBox" TextWrapping="Wrap" Text="Name" Height="60" Width="250" Grid.ColumnSpan="3" Margin="35,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="16" FontFamily="Arial Black"/>
         <TextBox x:Name="desctiptionTextBox" TextWrapping="Wrap" Text="Description" Height ="120" Width="350" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Margin ="35,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Times New Roman"></TextBox>
-        <Button x:Name="cancelButton" Content="Cancel" Margin="80,0,0,20" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height ="35" Click="cancelButton_Click"/>
+        <Button x:Name="cancelButton" Content="Cancel" Margin="80,0,0,20" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height ="35" Click="CancelButton_Click"/>
         <Button x:Name="OKButton" Content="OK" Margin="180,0,0,20" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height ="35" Click="OKButton_Click"/>
     </Grid>
 </Window>

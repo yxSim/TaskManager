@@ -28,6 +28,7 @@ namespace ToDoApp
             DoAddNewTask();
         }
 
+        //metoda prida novy ukol a ulozi ho do xml souboru
         private void DoAddNewTask()
         {
             var task = new Task(_nameBox?.Text!, _descriptionBox?.Text!);
